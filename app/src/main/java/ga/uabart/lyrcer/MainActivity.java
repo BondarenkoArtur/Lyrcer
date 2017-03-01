@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.mukesh.MarkdownView;
+
 import ga.uabart.lyrcer.github.GitHubConnector;
 import ga.uabart.lyrcer.github.impl.GitHubConnectorImpl;
 import ga.uabart.lyrcer.github.impl.GitHubRepoAdapter;
@@ -30,6 +32,10 @@ public class MainActivity extends Activity {
     }
 
     private void initViews() {
+        MarkdownView markdownView = (MarkdownView) findViewById(R.id.markdown_view);
+//        markdownView.setMarkDownText("# Hello World\nThis is a simple markdown"); //Displays markdown text
+        markdownView.loadMarkdownFromAssets("test.md");
+
         final EditText editText = (EditText) findViewById(R.id.activity_main_edit_text);
         Button button = (Button) findViewById(R.id.activity_main_button);
         button.setOnClickListener(new View.OnClickListener() {

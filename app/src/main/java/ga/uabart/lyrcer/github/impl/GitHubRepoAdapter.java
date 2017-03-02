@@ -11,8 +11,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import ga.uabart.lyrcer.R;
-import ga.uabart.lyrcer.contents.ContentsActivity;
 import ga.uabart.lyrcer.github.model.Repo;
+import ga.uabart.lyrcer.sync.SyncActivity;
 
 import static ga.uabart.lyrcer.contents.ContentsActivity.CONTENTS_REPO;
 import static ga.uabart.lyrcer.contents.ContentsActivity.CONTENTS_USER;
@@ -91,7 +91,7 @@ public class GitHubRepoAdapter extends BaseAdapter {
         vi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mIntent = new Intent(context, ContentsActivity.class);
+                Intent mIntent = new Intent(context, SyncActivity.class);
                 mIntent.putExtra(CONTENTS_REPO, repo.name);
                 mIntent.putExtra(CONTENTS_USER, repo.owner.login);
                 context.startActivity(mIntent);

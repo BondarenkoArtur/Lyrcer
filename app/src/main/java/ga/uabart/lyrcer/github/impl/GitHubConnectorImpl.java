@@ -36,12 +36,16 @@ public class GitHubConnectorImpl implements GitHubConnector {
     public void repo(String s, final GitHubRepoAdapter adapter) {
 
         GitHubService service = retrofit.create(GitHubService.class);
-        Call<List<Repo>> repos = service.listRepos(s);
+        final Call<List<Repo>> repos = service.listRepos(s);
         repos.enqueue(new Callback<List<Repo>>() {
             @Override
             public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
-                adapter.setList(response.body());
-                adapter.notifyDataSetInvalidated();
+                if (response.isSuccessful()) {
+                    adapter.setList(response.body());
+                    adapter.notifyDataSetInvalidated();
+                } else {
+                    throw new NullPointerException("Response is not successful " + response.code());
+                }
             }
 
             @Override
@@ -49,6 +53,21 @@ public class GitHubConnectorImpl implements GitHubConnector {
 
             }
         });
+    }
+
+    public void getContents(String user, String repo, Callback<List<Content>> callback){
+        getContents(user, repo, null, callback);
+    }
+
+    public void getContents(String user, String repo, String path, Callback<List<Content>> callback) {
+        GitHubService service = retrofit.create(GitHubService.class);
+        Call<List<Content>> contents;
+        if (path != null) {
+            contents = service.listContent(user, repo, path);
+        } else {
+            contents = service.listContent(user, repo);
+        }
+        contents.enqueue(callback);
     }
 
     @Override

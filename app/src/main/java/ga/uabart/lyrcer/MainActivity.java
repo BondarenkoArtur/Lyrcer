@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.mukesh.MarkdownView;
+import ga.uabart.markdown.MarkdownView;
 
 import ga.uabart.lyrcer.github.GitHubConnector;
 import ga.uabart.lyrcer.github.impl.GitHubConnectorImpl;

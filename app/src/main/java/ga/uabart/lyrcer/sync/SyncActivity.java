@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.io.File;
+
 import ga.uabart.lyrcer.R;
 import ga.uabart.lyrcer.github.GitHubConnector;
 import ga.uabart.lyrcer.github.impl.GitHubConnectorImpl;
@@ -46,8 +48,8 @@ public class SyncActivity extends Activity {
         }
     }
 
-    private void onRefresh(int amount, long size) {
-        textView.setText("Amount: " + amount + " Size: " + size);
+    private void onRefresh(int amount, long size, File file) {
+        textView.setText("Amount: " + amount + " Size: " + size + "\nFolder: " + file.toString());
     }
 
     private void sync() {
@@ -57,8 +59,8 @@ public class SyncActivity extends Activity {
     }
 
     class SyncListener {
-        void onSync(int amount, long size) {
-            onRefresh(amount, size);
+        void onSync(int amount, long size, File file) {
+            onRefresh(amount, size, file);
         }
     }
 

@@ -47,13 +47,13 @@ public class SyncManager {
             listToDownload.add(content);
             size += content.size;
             downloadFile(content);
-            syncListener.onSync(listToDownload.size(), size);
+            syncListener.onSync(listToDownload.size(), size, new File(externalFilesDir, githubRepo));
         }
     }
 
     private void downloadFile(Content content) {
         File file = new File(externalFilesDir, githubRepo + File.separator + content.path);
-        file.mkdirs();
+        new File(file.getParent()).mkdirs();
         FileUtil.downloadFile(content.download_url, file, client);
     }
 

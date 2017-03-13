@@ -460,7 +460,8 @@ var inline = {
   code: /^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/,
   br: /^ {2,}\n(?!\s*$)/,
   del: noop,
-  text: /^[\s\S]+?(?=[\\<!\[_*`]| {2,}\n|$)/
+  chord: /^\{([\s\S]+?)\}(?!_)/,
+  text: /^[\s\S]+?(?=[\\<!\{\[_*`]| {2,}\n|$)/
 };
 
 inline._inside = /(?:\[[^\]]*\]|[^\[\]]|\](?=[^\[]*\]))*/;
@@ -641,6 +642,13 @@ InlineLexer.prototype.output = function(src) {
       this.inLink = true;
       out += this.outputLink(cap, link);
       this.inLink = false;
+      continue;
+    }
+
+    // chord
+    if (cap = this.rules.chord.exec(src)) {
+      src = src.substring(cap[0].length);
+      out += this.renderer.chord(this.output(cap[2] || cap[1]));
       continue;
     }
 
@@ -848,6 +856,10 @@ Renderer.prototype.tablecell = function(content, flags) {
 // span level renderer
 Renderer.prototype.strong = function(text) {
   return '<strong>' + text + '</strong>';
+};
+
+Renderer.prototype.chord = function(text) {
+  return '<span class="chord"><span class="inner">' + text + '</span></span>';
 };
 
 Renderer.prototype.em = function(text) {
